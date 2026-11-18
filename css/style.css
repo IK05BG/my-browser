@@ -1,0 +1,792 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family:
+        "Segoe UI Variable",
+        "Segoe UI",
+        sans-serif;
+}
+
+#settingsPanel {
+
+    font-family:
+        "Segoe UI Variable",
+        "Segoe UI",
+        sans-serif;
+}
+
+body {
+    background: linear-gradient(
+        135deg,
+        #0a1931 0%,
+        #000000 100%
+    );
+}
+
+/* Фон */
+
+#background {
+    position: fixed;
+    inset: 0;
+
+    z-index: -2;
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    transition: transform .08s linear;
+    will-change: transform;
+}
+
+#browserTitle {
+
+    margin: 0 0 24px 0;
+
+    color: white;
+
+    text-align: center;
+
+    font-family:
+        "Marck Script",
+        cursive;
+
+    font-size: 58px;
+
+    font-weight: normal;
+
+    letter-spacing: 1px;
+
+    text-shadow:
+        0 1px 2px rgba(0,0,0,.35),
+        0 0 8px rgba(0,0,0,.15);
+
+    animation:
+        titleFade .6s ease;
+}
+
+#browserTitle {
+
+    animation:
+        titleFade .6s ease;
+}
+
+@keyframes titleFade {
+
+    from {
+
+        opacity: 0;
+        transform:
+            translateY(-10px);
+
+    }
+
+    to {
+
+        opacity: 1;
+        transform:
+            translateY(0);
+
+    }
+
+}
+
+/* Леко затъмняване */
+
+#overlay {
+    position: fixed;
+    inset: 0;
+
+    background: rgba(0, 0, 0, 0.15);
+
+    z-index: -1;
+}
+
+/* Центриране */
+
+#home {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Контейнер */
+
+#searchContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Лента */
+
+#searchForm {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Търсене */
+
+#searchInput {
+    width: 650px;
+    height: 64px;
+
+    border-radius: 32px;
+
+    border: 1px solid rgba(255,255,255,.18);
+
+    background: rgba(20,20,20,0.15);
+
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
+
+    color: white;
+
+    font-size: 20px;
+
+    padding-inline: 28px;
+
+    outline: none;
+
+    transition:
+        width .3s ease,
+        border-color .3s ease,
+        box-shadow .3s ease;
+}
+
+#searchInput::placeholder {
+
+    color:
+        rgba(255,255,255,.15);
+
+}
+
+#searchInput:hover {
+
+    border-color:
+        rgba(255,255,255,.45); //.30
+
+    box-shadow:
+        0 0 15px
+        rgba(255,255,255,.08); //.05
+
+}
+
+/* Разширяване */
+
+#searchInput:focus {
+
+    width: 780px;
+
+    border-color:
+    rgba(255,255,255,.45);
+
+    box-shadow:
+    0 0 30px
+    rgba(255,255,255,.08);
+
+}
+
+/* Placeholder */
+
+#searchInput::placeholder {
+    color: rgba(255,255,255,.4);
+}
+
+/* Copilot */
+
+#copilotButton {
+    width: 64px;
+    height: 64px;
+
+    border-radius: 50%;
+
+    border: 1px solid rgba(255,255,255,.18);
+
+    background: rgba(20,20,20,0.15);
+
+    backdrop-filter: blur(22px);
+
+    color: white;
+
+    font-size: 24px;
+
+    cursor: pointer;
+
+    transition: .25s ease;
+}
+
+#copilotButton:hover {
+    transform: scale(1.08);
+}
+
+/* Настройки */
+
+#settingsButton {
+    position: fixed;
+
+    top: 24px;
+    right: 24px;
+
+    width: 52px;
+    height: 52px;
+
+    border-radius: 50%;
+
+    border: 1px solid rgba(255,255,255,.18);
+
+    background: rgba(20,20,20,0.15);
+
+    backdrop-filter: blur(20px);
+
+    color: white;
+
+    cursor: pointer;
+
+    font-size: 22px;
+
+    z-index: 1000;
+
+    transition:
+        opacity .25s ease,
+        transform .25s ease,
+        background .25s ease,
+        border-color .25s ease;
+}
+
+#settingsButton.hidden, 
+#weatherWidget.hidden {
+
+    opacity: 0;
+
+    transform:
+        scale(.8);
+
+    pointer-events: none;
+
+}
+
+#settingsButton img {
+
+    width: 28px;
+
+    height: 28px;
+
+    display: block;
+
+    object-fit: contain;
+
+    pointer-events: none;
+
+    user-select: none;
+
+}
+
+/* Панел */
+
+#settingsPanel {
+    position: fixed;
+
+    top: 20px;
+    right: 20px;
+
+    width: 360px;
+    height: calc(100vh - 40px);
+
+    border-radius: 28px;
+
+    background: rgba(20,20,20,0.15);
+
+    border: 1px solid rgba(255,255,255,.18);
+
+    backdrop-filter: blur(28px);
+
+    color: white;
+
+    padding: 24px 18px 24px 24px;
+
+    transform: translateX(430px);
+
+    transition: .35s ease;
+
+    overflow-y: auto;
+}
+
+/* Отворен панел */
+
+#settingsPanel.open {
+    transform: translateX(0);
+}
+
+.section {
+    margin-top: 24px;
+}
+
+#wallpaperGallery {
+    margin-top: 16px;
+
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 12px;
+}
+
+#wallpaperInput {
+
+    display: none;
+
+}
+
+.uploadButton {
+
+    flex: 1;
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+
+    height: 48px;
+
+    margin-top: 12px;
+
+    border-radius: 18px;
+
+    cursor: pointer;
+
+    color: white;
+
+    font-family:
+        "Segoe UI Variable",
+        "Segoe UI",
+        sans-serif;
+
+    font-weight: 600;
+
+    border: 1px solid
+        rgba(255,255,255,.18);
+
+    background:
+        rgba(255,255,255,.08);
+
+    backdrop-filter:
+        blur(24px);
+
+    transition:
+        0.25s ease;
+}
+
+.uploadButton:hover {
+
+    background:
+        rgba(255,255,255,.12);
+
+    border-color:
+        rgba(255,255,255,.30);
+
+    transform:
+        translateY(-2px);
+}
+
+.uploadButton:active {
+
+    transform:
+        scale(0.94);
+}
+
+#settingsButton {
+
+    transition:
+        background .25s ease,
+        border-color .25s ease;
+
+        display: flex;
+
+        justify-content: center;
+
+        align-items: center;
+}
+
+#settingsButton:hover {
+
+    background:
+        rgba(255,255,255,.14);
+
+    border-color:
+        rgba(255,255,255,.35);
+}
+
+.wallpaper-card {
+
+    position: relative;
+
+    height: 100px;
+
+    border-radius: 16px;
+
+    overflow: hidden;
+
+    cursor: pointer;
+
+    border: 2px solid transparent;
+
+    transition: all .25s ease;
+}
+
+.wallpaper-card:hover {
+
+    border-color:
+    rgba(255,255,255,.35);
+
+}
+
+.wallpaper-card.active {
+
+    border-color:
+    rgba(255,255,255,.75);
+
+    box-shadow:
+    0 0 15px rgba(255,255,255,.20);
+}
+
+.wallpaper-card img {
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+.wallpaper-delete {
+
+    position: absolute;
+
+    top: 6px;
+    right: 6px;
+
+    width: 24px;
+    height: 24px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: rgba(0,0,0,.55);
+
+    color: white;
+
+    cursor: pointer;
+
+    opacity: 0;
+
+    transition:
+        opacity .2s ease,
+        background .2s ease,
+        transform .2s ease;
+
+    z-index: 5;
+}
+
+.wallpaper-card:hover .wallpaper-delete {
+
+    opacity: 1;
+
+}
+
+.wallpaper-delete:hover {
+
+    background:
+        rgba(255,255,255,.25);
+
+}
+
+.wallpaperActions {
+
+    display: flex;
+
+    gap: 10px;
+
+    width: 100%;
+}
+
+#resetWallpaperButton {
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    width: 48px;
+
+    height: 48px;
+
+    margin-top: 12px;
+
+    border-radius: 18px;
+
+    cursor: pointer;
+
+    color: white;
+
+    font-family:
+        "Segoe UI Variable",
+        "Segoe UI",
+        sans-serif;
+
+    font-weight: 600;
+
+    border: 1px solid
+        rgba(255,255,255,.18);
+
+    background:
+        rgba(255,255,255,.08);
+
+    backdrop-filter:
+        blur(24px);
+
+    transition:
+        0.25s ease;
+}
+
+#resetWallpaperButton:hover {
+
+    background:
+        rgba(255,255,255,.12);
+
+    border-color:
+        rgba(255,255,255,.30);
+
+    transform:
+        translateY(-2px);
+
+}
+
+#resetWallpaperButton:active {
+
+    transform:
+        translateY(0px)
+        scale(0.90);
+
+}
+
+/* Scrollbar */
+
+#settingsPanel::-webkit-scrollbar {
+
+    width: 14px;
+
+}
+
+#settingsPanel::-webkit-scrollbar-track {
+
+    margin-top: 89px;
+    margin-bottom: 20px;
+
+    background: transparent;
+
+}
+
+#settingsPanel::-webkit-scrollbar-thumb {
+
+    background:
+        rgba(255,255,255,.18);
+
+    border-radius: 999px;
+
+    opacity: 0;
+
+    transition:
+        background .25s ease;
+    border: 4px solid transparent;
+    background-clip: padding-box;
+}
+
+#settingsPanel::-webkit-scrollbar-thumb {
+
+    background:
+        rgba(255,255,255,.22);
+
+    border-radius: 999px;
+
+    border: 4px solid transparent;
+
+    background-clip: padding-box;
+
+    transition:
+        opacity .2s ease;
+}
+
+@keyframes settingsPop {
+
+    0% {
+
+        opacity: 0;
+
+        transform: scale(.92);
+
+    }
+
+    60% {
+
+        opacity: 1;
+
+        transform: scale(1.03);
+
+    }
+
+    100% {
+
+        opacity: 1;
+
+        transform: scale(1);
+
+    }
+
+}
+
+#settingsButton.pop, 
+#weatherWidget.pop {
+
+    animation:
+        settingsPop .35s ease;
+
+}
+
+#copilotButton {
+
+    width: 64px;
+    height: 64px;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 50%;
+
+    border: 1px solid rgba(255,255,255,.18);
+
+    background: rgba(20,20,20,0.15);
+
+    backdrop-filter: blur(22px);
+
+    cursor: pointer;
+}
+
+#copilotButton img {
+
+    width: 36px;
+    height: 36px;
+
+    object-fit: contain;
+
+    pointer-events: none;
+
+    user-select: none;
+
+    margin-top: 1px;
+    padding-top: 1px;
+
+    transition:
+            transform .25s ease;
+            border-color .25s ease,
+            box-shadow .25s ease,
+            background .25s ease;
+}
+
+#copilotButton:hover {
+
+    transform:
+        scale(1.08);
+
+    border-color:
+        rgba(255,255,255,.45);
+
+    box-shadow:
+        0 0 20px
+        rgba(255,255,255,.10);
+
+    background:
+        rgba(255,255,255,.12);
+
+}
+
+#weatherIcon {
+
+    text-align: center;
+    font-size: 30px;
+    line-height: 0;
+    position: relative;
+    top: -2px;
+
+}
+
+#weatherWidget {
+
+    position: fixed;
+
+    top: 24px;
+
+    right: 82px;
+
+    height: 52px;
+
+    padding: 0 18px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 3px;
+
+    border-radius: 999px;
+
+    color: white;
+
+    font-family:
+        "Segoe UI Variable",
+        "Segoe UI",
+        sans-serif;
+
+    border: 1px solid
+        rgba(255,255,255,.18);
+
+    background:
+        rgba(20,20,20,0.15);
+
+    backdrop-filter:
+        blur(24px);
+
+    transition:
+        opacity .25s ease,
+        background .25s ease,
+        border-color .25s ease;
+
+    cursor: pointer;
+
+}
+
+
+#weatherWidget:hover {
+
+    background:
+        rgba(255,255,255,.12);
+
+    border-color:
+        rgba(255,255,255,.30);
+
+}
