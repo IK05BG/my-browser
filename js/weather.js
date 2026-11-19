@@ -48,7 +48,7 @@ async function loadWeatherFromCoords(
         code <= 48
     ) {
 
-        icon = "🌫️";
+        icon = "ᯓ";
 
     }
     else if (
