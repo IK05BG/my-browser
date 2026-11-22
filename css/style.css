@@ -51,6 +51,7 @@ body {
 
     transition: transform .08s linear;
     will-change: transform;
+    transform: translateZ(0);
 }
 
 #browserTitle {
