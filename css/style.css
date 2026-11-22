@@ -37,11 +37,11 @@ body {
     position: fixed;
     inset: 0;
 
-    top: -3%;
-    left: -3%;
+    top: -6%;
+    left: -6%;
 
-    width: 106%;
-    height: 106%;
+    width: 112%;
+    height: 112%;
     
     z-index: -2;
 
