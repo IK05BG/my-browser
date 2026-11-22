@@ -35,12 +35,6 @@ wallpaperInput.addEventListener(
 
             img.onload = () => {
 
-                let width =
-                    img.width;
-
-                let height =
-                    img.height;
-
                 const isPng =
                     file.type ===
                     "image/png";
@@ -51,9 +45,6 @@ wallpaperInput.addEventListener(
 
                 let quality =
                     1.0;
-
-                let maxWidth =
-                    width;
 
                 if (isPng) {
 
@@ -71,23 +62,6 @@ wallpaperInput.addEventListener(
 
                     quality = 0.85;
 
-                    maxWidth = 2560;
-
-                }
-
-                if (width > maxWidth) {
-
-                    const ratio =
-                        maxWidth / width;
-
-                    width =
-                        maxWidth;
-
-                    height =
-                        Math.round(
-                            height * ratio
-                        );
-
                 }
 
                 const canvas =
@@ -96,10 +70,10 @@ wallpaperInput.addEventListener(
                     );
 
                 canvas.width =
-                    width;
+                    img.width;
 
                 canvas.height =
-                    height;
+                    img.height;
 
                 const ctx =
                     canvas.getContext(
@@ -109,9 +83,7 @@ wallpaperInput.addEventListener(
                 ctx.drawImage(
                     img,
                     0,
-                    0,
-                    width,
-                    height
+                    0
                 );
 
                 const image =
