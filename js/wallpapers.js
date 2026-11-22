@@ -35,16 +35,71 @@ wallpaperInput.addEventListener(
 
             img.onload = () => {
 
+                let width =
+                    img.width;
+
+                let height =
+                    img.height;
+
+                const isPng =
+                    file.type ===
+                    "image/png";
+
+                const sizeMB =
+                    file.size /
+                    (1024 * 1024);
+
+                let quality =
+                    1.0;
+
+                let maxWidth =
+                    width;
+
+                if (isPng) {
+
+                    quality = 0.95;
+
+                }
+
+                if (sizeMB > 5) {
+
+                    quality = 0.90;
+
+                }
+
+                if (sizeMB > 10) {
+
+                    quality = 0.85;
+
+                    maxWidth = 2560;
+
+                }
+
+                if (width > maxWidth) {
+
+                    const ratio =
+                        maxWidth / width;
+
+                    width =
+                        maxWidth;
+
+                    height =
+                        Math.round(
+                            height * ratio
+                        );
+
+                }
+
                 const canvas =
                     document.createElement(
                         "canvas"
                     );
 
                 canvas.width =
-                    img.width;
+                    width;
 
                 canvas.height =
-                    img.height;
+                    height;
 
                 const ctx =
                     canvas.getContext(
@@ -54,13 +109,15 @@ wallpaperInput.addEventListener(
                 ctx.drawImage(
                     img,
                     0,
-                    0
+                    0,
+                    width,
+                    height
                 );
 
                 const image =
                     canvas.toDataURL(
                         "image/jpeg",
-                        0.95
+                        quality
                     );
 
                 const wallpaperId =
