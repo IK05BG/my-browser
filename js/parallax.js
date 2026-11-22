@@ -37,7 +37,7 @@ function updateParallax() {
         `translate(
             ${-moveX}px,
             ${-moveY}px
-        ) scale(1.08)`;
+        ) scale(1)`;
 
     requestAnimationFrame(
         updateParallax
