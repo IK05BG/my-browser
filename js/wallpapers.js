@@ -17,56 +17,94 @@ wallpaperInput.addEventListener(
     (event) => {
 
         const file =
-        event.target.files[0];
+            event.target.files[0];
 
         if (!file) {
+
             return;
+
         }
 
         const reader =
-        new FileReader();
+            new FileReader();
 
         reader.onload = (e) => {
 
-            console.log("reader.onload");
-            const image =
-            e.target.result;
+            const img =
+                new Image();
 
-            const wallpaperId =
-            Date.now();
+            img.onload = () => {
 
-            saveWallpaper(
-                wallpaperId,
-                image
-            );
-
-            document
-                .querySelectorAll(
-                    ".wallpaper-card"
-                )
-                .forEach(card => {
-
-                    card.classList.remove(
-                        "active"
+                const canvas =
+                    document.createElement(
+                        "canvas"
                     );
 
-                });
+                canvas.width =
+                    img.width;
 
-            background.style.backgroundImage =
-            `url(${image})`;
+                canvas.height =
+                    img.height;
 
-            setActiveWallpaper(
-                wallpaperId
-            );
+                const ctx =
+                    canvas.getContext(
+                        "2d"
+                    );
 
-            renderThumbnail(
-                wallpaperId,
-                image
-            );
+                ctx.drawImage(
+                    img,
+                    0,
+                    0
+                );
+
+                const image =
+                    canvas.toDataURL(
+                        "image/jpeg",
+                        0.95
+                    );
+
+                const wallpaperId =
+                    Date.now();
+
+                saveWallpaper(
+                    wallpaperId,
+                    image
+                );
+
+                document
+                    .querySelectorAll(
+                        ".wallpaper-card"
+                    )
+                    .forEach(card => {
+
+                        card.classList.remove(
+                            "active"
+                        );
+
+                    });
+
+                background.style.backgroundImage =
+                    `url(${image})`;
+
+                setActiveWallpaper(
+                    wallpaperId
+                );
+
+                renderThumbnail(
+                    wallpaperId,
+                    image
+                );
+
+            };
+
+            img.src =
+                e.target.result;
 
         };
 
-        reader.readAsDataURL(file);
+        reader.readAsDataURL(
+            file
+        );
 
     }
 );
