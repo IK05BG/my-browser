@@ -28,10 +28,10 @@ function updateParallax() {
         window.innerHeight / 2;
 
     const moveX =
-        (mouseX - centerX) / 25;
+        (mouseX - centerX) / 30;
 
     const moveY =
-        (mouseY - centerY) / 25;
+        (mouseY - centerY) / 30;
 
     parallaxBackground.style.transform =
         `translate(
