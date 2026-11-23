@@ -106,6 +106,15 @@ body {
 
 }
 
+.title-letter {
+
+    display: inline-block;
+
+    transition:
+        transform .2s ease;
+
+}
+
 /* Леко затъмняване */
 
 #overlay {
